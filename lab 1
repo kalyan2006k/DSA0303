@@ -1,0 +1,8 @@
+import re
+text = "Python is easy. Python version 3.12"
+m = re.match("Python", text)
+if m:
+    print("Match found:", m.group())
+s = re.search(r"\d+\.\d+", text)
+if s:
+    print("Version found:", s.group())
