@@ -1,1 +1,14 @@
+import random
 
+words = ["I", "eat", "food"]
+tags = ["PRP", "VBP", "NN"]
+
+prob = {
+    "I": {"PRP": 0.9, "NN": 0.1},
+    "eat": {"VBP": 0.8, "NN": 0.2},
+    "food": {"NN": 0.9, "VBP": 0.1}
+}
+
+for w in words:
+    t = max(prob[w], key=prob[w].get)
+    print(w, "->", t)
