@@ -1,1 +1,16 @@
+import re
 
+words = "The boy runs quickly and plays happily".split()
+
+for w in words:
+    if re.match(r'.*ly$', w):
+        tag = "RB"
+    elif re.match(r'.*ing$', w):
+        tag = "VBG"
+    elif re.match(r'.*ed$', w):
+        tag = "VBD"
+    elif w.lower() in ["the", "a", "an"]:
+        tag = "DT"
+    else:
+        tag = "NN"
+    print(w, "->", tag)
