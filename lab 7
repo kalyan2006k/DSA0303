@@ -1,1 +1,13 @@
+import nltk
+from nltk import word_tokenize, pos_tag
 
+nltk.download('punkt')
+nltk.download('punkt_tab')
+nltk.download('averaged_perceptron_tagger_eng')
+
+text = "The intelligent student quickly solved the problem."
+
+words = word_tokenize(text)
+tags = pos_tag(words)
+
+print(tags)
