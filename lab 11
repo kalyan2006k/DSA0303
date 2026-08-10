@@ -1,1 +1,17 @@
+import nltk
 
+grammar = nltk.CFG.fromstring("""
+S -> NP VP
+NP -> Det N
+VP -> V NP
+Det -> 'the'
+N -> 'cat' | 'fish'
+V -> 'eats'
+""")
+
+parser = nltk.RecursiveDescentParser(grammar)
+sentence = "the cat eats the fish".split()
+
+for tree in parser.parse(sentence):
+    print(tree)
+    tree.pretty_print()
