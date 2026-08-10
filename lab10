@@ -1,1 +1,13 @@
+words = "The cats are running".split()
 
+tags = ["NN"] * len(words)
+
+for i, w in enumerate(words):
+    if w.lower() in ["the", "a", "an"]:
+        tags[i] = "DT"
+    if w.endswith("ing"):
+        tags[i] = "VBG"
+    if w.lower() in ["are", "is", "am"]:
+        tags[i] = "VB"
+
+print(list(zip(words, tags)))
