@@ -1,1 +1,105 @@
+# Experiment 1
+# Context-Free Grammar (CFG) Rule Validation and Parse Tree Construction
 
+# Grammar:
+# S  -> NP VP
+# NP -> Det N
+# VP -> V NP
+# Det -> the | a
+# N -> student | teacher | book
+# V -> reads | likes
+
+
+grammar = {
+    "S": [["NP", "VP"]],
+    "NP": [["Det", "N"]],
+    "VP": [["V", "NP"]],
+    "Det": [["the"], ["a"]],
+    "N": [["student"], ["teacher"], ["book"]],
+    "V": [["reads"], ["likes"]]
+}
+
+
+def parse_cfg(sentence):
+    """
+    Validate a sentence using the CFG grammar
+    and return its parse tree.
+    """
+
+    words = sentence.lower().split()
+
+    # Recursive parser
+    def parse(symbol, position):
+
+        # Terminal symbol
+        if symbol not in grammar:
+            if position < len(words) and words[position] == symbol:
+                return (symbol, position + 1)
+            return None
+
+        # Try each production rule
+        for production in grammar[symbol]:
+
+            children = []
+            current_position = position
+            success = True
+
+            for item in production:
+                result = parse(item, current_position)
+
+                if result is None:
+                    success = False
+                    break
+
+                child, current_position = result
+                children.append(child)
+
+            if success:
+                return ((symbol, children), current_position)
+
+        return None
+
+    result = parse("S", 0)
+
+    # Sentence is valid only if all words are consumed
+    if result is not None and result[1] == len(words):
+        return result[0]
+
+    return None
+
+
+def print_tree(tree, level=0):
+    """Print the parse tree in an indented format."""
+
+    if isinstance(tree, str):
+        print("  " * level + tree)
+        return
+
+    symbol, children = tree
+    print("  " * level + symbol)
+
+    for child in children:
+        print_tree(child, level + 1)
+
+
+# Test cases
+test_sentences = [
+    "the student reads a book",
+    "a teacher likes the book",
+    "student reads book",
+    "the book likes a teacher",
+    "reads the student book"
+]
+
+
+for sentence in test_sentences:
+
+    print("\nSentence:", sentence)
+
+    tree = parse_cfg(sentence)
+
+    if tree is None:
+        print("Invalid Sentence")
+    else:
+        print("Valid Parse Tree:")
+        print_tree(tree)
