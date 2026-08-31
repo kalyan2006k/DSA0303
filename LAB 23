@@ -1,0 +1,38 @@
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+import nltk
+
+nltk.download('punkt')
+nltk.download('punkt_tab')
+
+text = input("Enter a text: ")
+
+sentences = nltk.sent_tokenize(text)
+
+if len(sentences) < 2:
+    print("Enter at least two sentences.")
+else:
+    vectorizer = TfidfVectorizer()
+
+    vectors = vectorizer.fit_transform(sentences)
+
+    scores = []
+
+    for i in range(len(sentences) - 1):
+        score = cosine_similarity(
+            vectors[i],
+            vectors[i + 1]
+        )[0][0]
+
+        scores.append(score)
+
+    coherence = sum(scores) / len(scores)
+
+    print("\nCoherence Score:", round(coherence, 4))
+
+    if coherence >= 0.5:
+        print("The text is highly coherent.")
+    elif coherence >= 0.2:
+        print("The text is moderately coherent.")
+    else:
+        print("The text has low coherence.")
