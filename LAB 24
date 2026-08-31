@@ -1,0 +1,39 @@
+def recognize_dialog_act(sentence):
+
+    text = sentence.lower()
+
+    if text.endswith("?"):
+        return "QUESTION"
+
+    if any(word in text for word in
+           ["hello", "hi", "hey", "good morning"]):
+        return "GREETING"
+
+    if any(word in text for word in
+           ["thank you", "thanks"]):
+        return "THANKING"
+
+    if any(word in text for word in
+           ["bye", "goodbye", "see you"]):
+        return "GOODBYE"
+
+    if any(word in text for word in
+           ["please", "could you", "can you"]):
+        return "REQUEST"
+
+    if any(word in text for word in
+           ["yes", "okay", "sure", "correct"]):
+        return "AGREEMENT"
+
+    if any(word in text for word in
+           ["no", "not", "wrong"]):
+        return "DISAGREEMENT"
+
+    return "STATEMENT"
+
+
+sentence = input("Enter a dialog sentence: ")
+
+act = recognize_dialog_act(sentence)
+
+print("Dialog Act:", act)
