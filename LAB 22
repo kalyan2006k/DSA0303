@@ -1,0 +1,44 @@
+import nltk
+
+nltk.download('punkt')
+nltk.download('punkt_tab')
+
+def reference_resolution(text):
+    sentences = nltk.sent_tokenize(text)
+
+    previous_nouns = []
+
+    pronouns = [
+        "he", "she", "it", "they",
+        "him", "her", "them",
+        "his", "their"
+    ]
+
+    for sentence in sentences:
+        words = nltk.word_tokenize(sentence)
+
+        print("\nSentence:", sentence)
+
+        for word in words:
+            if word.lower() in pronouns:
+                if previous_nouns:
+                    print(
+                        "Reference:",
+                        word,
+                        "->",
+                        previous_nouns[-1]
+                    )
+                else:
+                    print(
+                        "Reference:",
+                        word,
+                        "-> Unknown"
+                    )
+
+            # Simple noun detection
+            if word[0].isupper() and word.lower() not in pronouns:
+                previous_nouns.append(word)
+
+text = input("Enter a text: ")
+
+reference_resolution(text)
