@@ -1,0 +1,22 @@
+import re
+
+def parse_fopc(expression):
+    expression = expression.strip()
+
+    # Predicate with arguments: P(x), Loves(John,Mary)
+    pattern = r'([A-Za-z][A-Za-z0-9_]*)\s*\((.*?)\)'
+
+    matches = re.findall(pattern, expression)
+
+    if matches:
+        print("Valid FOPC Expression")
+        for predicate, arguments in matches:
+            args = [arg.strip() for arg in arguments.split(',')]
+            print("Predicate:", predicate)
+            print("Arguments:", args)
+    else:
+        print("Invalid FOPC Expression")
+
+expression = input("Enter FOPC expression: ")
+
+parse_fopc(expression)
