@@ -1,1 +1,17 @@
+import nltk
+from nltk.corpus import wordnet
 
+# Download WordNet
+nltk.download('wordnet')
+nltk.download('omw-1.4')
+
+word = input("Enter a word: ")
+
+synsets = wordnet.synsets(word)
+
+print("\nSynsets and Meanings:")
+for synset in synsets:
+    print("Synset:", synset.name())
+    print("Definition:", synset.definition())
+    print("Examples:", synset.examples())
+    print()
